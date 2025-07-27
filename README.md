@@ -116,3 +116,35 @@ The value checked in with the C tag in the third line is checked out in the fift
 Notes:
   - This function uses a persistent dictionary to retain values across calls.
   - It logs success or failure messages via the PUT statement.
+
+# version history
+0.1.0(28July2025): Initial version
+
+## What is SAS Packages?  
+The package is built on top of **SAS Packages framework(SPF)** developed by Bartosz Jablonski.
+For more information about SAS Packages framework, see [SAS_PACKAGES](https://github.com/yabwon/SAS_PACKAGES).  
+You can also find more SAS Packages(SASPACs) in [SASPAC](https://github.com/SASPAC).
+
+## How to use SAS Packages? (quick start)
+### 1. Set-up SPF(SAS Packages Framework)
+Firstly, create directory for your packages and assign a fileref to it.
+~~~sas      
+filename packages "\path\to\your\packages";
+~~~
+Secondly, enable the SAS Packages Framework.  
+(If you don't have SAS Packages Framework installed, follow the instruction in [SPF documentation](https://github.com/yabwon/SAS_PACKAGES/tree/main/SPF/Documentation) to install SAS Packages Framework.)  
+~~~sas      
+%include packages(SPFinit.sas)
+~~~  
+### 2. Install SAS package  
+Install SAS package you want to use using %installPackage() in SPFinit.sas.
+~~~sas      
+%installPackage(packagename, sourcePath=\github\path\for\packagename)
+~~~
+(e.g. %installPackage(ABC, sourcePath=https://github.com/XXXXX/ABC/raw/main/))  
+### 3. Load SAS package  
+Load SAS package you want to use using %loadPackage() in SPFinit.sas.
+~~~sas      
+%loadPackage(packagename)
+~~~
+### Enjoy😁
