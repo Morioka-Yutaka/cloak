@@ -110,7 +110,8 @@ run;
 ~~~
 <img width="657" height="327" alt="Image" src="https://github.com/user-attachments/assets/6f7d653f-8fdb-43c7-9390-faf11f49ce1c" />  
 
-
+The value checked in with the A tag in the first line is checked out in the last line.  
+The value checked in with the C tag in the third line is checked out in the fifth line, so it is clear that it no longer exists in the sixth line.  
 
 Notes:
   - This function uses a persistent dictionary to retain values across calls.
