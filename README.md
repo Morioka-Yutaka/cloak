@@ -59,3 +59,58 @@ The value checked in with the B tag in the second line is checked out in the fif
 Notes:  
   - This function uses a persistent dictionary to retain values across calls.  
   - It logs success or failure messages via the PUT statement.
+
+# :cloak_char() Function
+Description:
+  This function simulates a check-in/check-out mechanism for character items 
+  using a dictionary (hash-like structure). It accepts a unique tag (character string) 
+  and a character value for check-in. If an item with the same tag already exists, 
+  it rejects the new entry. If the second argument is missing, the function 
+  attempts to check out the item associated with the tag.  
+  
+Inputs: cloak_char(tag_sign,backage)  
+~~~text
+  tag_sign - A character string used as a key (up to 1000 characters).
+  backage  - A character string to be stored (for check-in), or missing (for check-out).
+~~~
+~~~text 
+Outputs:
+  - If check-in: returns a character string "0" (success) or "9999" (failure).
+  - If check-out: returns the stored character value, or "9999" if the tag was not found.
+~~~
+Usage:
+~~~sas 
+data test;
+do i = 1 to 10;
+ ID = char("ABCDEFGHIJ",i);
+ VAR1 =i ;
+ VAR2 =cats(ID,VAR1);
+ output;
+end;
+drop i;
+run;
+
+data test_output;
+ set test end=eof;
+ rc1 = cloak_num(ID,Var1);
+ rc2 = cloak_char(ID,Var2);
+
+if _N_ in (5,6) then do;
+  out1 = cloak_num("B",.);
+  out2 = cloak_char("C","");
+end;
+
+if eof then do;
+  out1 = cloak_num("A",.);
+  out2 = cloak_char("A","");
+end;
+
+drop rc:;
+run;
+~~~
+
+
+
+Notes:
+  - This function uses a persistent dictionary to retain values across calls.
+  - It logs success or failure messages via the PUT statement.
