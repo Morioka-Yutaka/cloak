@@ -52,6 +52,7 @@ drop rc:;
 run;
 ~~~
 <img width="342" height="166" alt="Image" src="https://github.com/user-attachments/assets/4c07944f-9c31-4d38-b824-248931252232" />  
+
 The value checked in with the A tag in the first line is checked out in the last line.  
 The value checked in with the B tag in the second line is checked out in the fifth line, so it is clear that it no longer exists in the sixth line.  
 
