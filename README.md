@@ -22,9 +22,34 @@ Outputs:
   - If check-out: returns the stored numeric value, or 9999 if the tag was not found.
 ~~~
 Usage:  
-~~~text 
-  - To check in: cloak_num("KEY123", 42);
-  - To check out: cloak_num("KEY123", .);
+~~~sas 
+data test;
+do i = 1 to 10;
+ ID = char("ABCDEFGHIJ",i);
+ VAR1 =i ;
+ VAR2 =cats(ID,VAR1);
+ output;
+end;
+drop i;
+run;
+
+data test_output;
+ set test end=eof;
+ rc1 = cloak_num(ID,Var1);
+ rc2 = cloak_char(ID,Var2);
+
+if _N_ in (5,6) then do;
+  out1 = cloak_num("B",.);
+  out2 = cloak_char("C","");
+end;
+
+if eof then do;
+  out1 = cloak_num("A",.);
+  out2 = cloak_char("A","");
+end;
+
+drop rc:;
+run;
 ~~~
 Notes:  
   - This function uses a persistent dictionary to retain values across calls.  
