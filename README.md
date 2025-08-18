@@ -1,7 +1,7 @@
 # cloak
 A simple FCMP-based check-in/check-out storage system using dictionary objects in SAS. Store and retrieve data by key, like a digital cloakroom.  
 
-<img width="250" height="250" alt="Image" src="https://github.com/user-attachments/assets/2bd230ca-a72c-4b7e-b2bb-f2212a089566" /> 
+<img width="300" height="300" alt="Image" src="https://github.com/user-attachments/assets/2bd230ca-a72c-4b7e-b2bb-f2212a089566" /> 
 
 # :cloak_num() Function
 Description:  
