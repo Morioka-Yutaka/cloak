@@ -155,7 +155,7 @@ Usage Example:
     x=.; %stack_pop(outvar=y,id=1); output;
     drop stack1_no stack1_data;
   run;
-~~~sas
+~~~
   
 ---
 
