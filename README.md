@@ -118,16 +118,56 @@ Notes:
   - This function uses a persistent dictionary to retain values across calls.
   - It logs success or failure messages via the PUT statement.
 
+## `%queue_init()` macro <a name="queueinit-macro-5"></a> ######
+Purpose:
+  Initialize a hash-based queue object in SAS for FIFO (First-In, First-Out)
+  data storage and retrieval. Each queue is identified by a unique ID.
+
+Parameters:
+  id=1
+    Unique numeric identifier for the queue (default: 1).
+  length=$200
+    Length specification for the data variable stored in the queue.
+  import_ds=
+    (Optional) Name of an external dataset to import initial queue contents.
+  import_ds_data_var=
+    (Optional) Variable name in the imported dataset containing data values.
+
+Usage Example:
+  data a;
+    %queue_init(id=1,length=$1);
+    x="A"; %enqueue(invar=x,id=1); output;
+    x="B"; %enqueue(invar=x,id=1); output;
+    x="C"; %enqueue(invar=x,id=1); output;
+    x=""; %dequeue(outvar=y,id=1); output;
+    x=""; %dequeue(outvar=y,id=1); output;
+    x=""; %queue_peek(outvar=y,id=1); output;
+    x=""; %dequeue(outvar=y,id=1); output;
+  run;
+
+data d;
+  %queue_init(id=1,length=8,import_ds=sashelp.class,import_ds_data_var=age);
+  x=1; %enqueue(invar=x,id=1); output;
+  x=.;  %dequeue(outvar=y,id=1);  output;
+  x=.;  %dequeue(outvar=y,id=1);  output;
+  x=.;  %dequeue(outvar=y,id=1);  output;
+  x=.;  %dequeue(outvar=y,id=1);  output;
+  drop queue1_no queue1_data;
+run;
+
+  
+---
+
 # version history
 0.1.0(28July2025):  Add  
-  %queue_init() macro  
-  ,%enqueue() macro  
-  ,%dequeue() macro  
-  ,%queue_peek() macro  
-  ,%stack_init() macro  
-  ,%stack_push() macro  
-  ,%stack_pop() macro  
-  ,%stack_peek() macro  
+ --- %queue_init() macro  
+ --- %enqueue() macro  
+ --- %dequeue() macro  
+ --- %queue_peek() macro  
+ --- %stack_init() macro  
+ --- %stack_push() macro  
+ --- %stack_pop() macro  
+ --- %stack_peek() macro  
 0.1.0(28July2025): Initial version
 
 ## What is SAS Packages?
