@@ -118,6 +118,138 @@ Notes:
   - This function uses a persistent dictionary to retain values across calls.
   - It logs success or failure messages via the PUT statement.
 
+## `%stack_init()` macro <a name="stackinit-macro-7"></a> ######
+
+Macro: stack_init
+Purpose:
+  Initialize a hash-based stack object in SAS for LIFO (Last-In, First-Out)
+  data storage and retrieval. Each stack is identified by a unique ID.
+
+Parameters:
+  id=1
+    Unique numeric identifier for the stack (default: 1).
+  length=$200
+    Length specification for the data variable stored in the stack.
+  import_ds=
+    (Optional) Name of an external dataset to import initial stack contents.
+  import_ds_data_var=
+    (Optional) Variable name in the imported dataset containing data values.
+
+Usage Example:
+  data a;
+    %stack_init(id=1,length=$1);
+    x="A"; %stack_push(invar=x,id=1); output;
+    x="B"; %stack_push(invar=x,id=1); output;
+    x="C"; %stack_push(invar=x,id=1); output;
+    x="";  %stack_pop(outvar=y,id=1);  output;
+    x="";  %stack_pop(outvar=y,id=1);  output;
+    x="";  %stack_peek(outvar=y,id=1); output;
+    x="";  %stack_pop(outvar=y,id=1);  output;
+  run;
+
+  data d;
+    %stack_init(id=1,length=8,import_ds=sashelp.class,import_ds_data_var=age);
+    x=1; %stack_push(invar=x,id=1); output;
+    x=.; %stack_pop(outvar=y,id=1); output;
+    x=.; %stack_pop(outvar=y,id=1); output;
+    drop stack1_no stack1_data;
+  run;
+
+  
+---
+
+## `%stack_push()` macro <a name="stackpush-macro-10"></a> ######
+
+Macro: stack_push
+Purpose:
+  Push (add) a new element onto the top of the hash-based stack.
+  This macro appends data to the stack initialized by %stack_init.
+
+Parameters:
+  invar=
+    Input variable containing the data value to be pushed.
+  id=1
+    Unique numeric identifier for the stack (default: 1).
+
+Usage Example:
+  data b;
+    %stack_init(id=1,length=8);
+    x=1; %stack_push(invar=x,id=1); output;
+    x=2; %stack_push(invar=x,id=1); output;
+    x=3; %stack_push(invar=x,id=1); output;
+    x=.; %stack_pop(outvar=y,id=1); output;
+  run;
+
+  data c;
+    set sashelp.class;
+    %stack_init(id=1,length=8);
+    if age <= 14 then do;
+      %stack_push(invar=age,id=1);
+    end;
+    else do;
+      %stack_pop(outvar=y,id=1);
+    end;
+  run;
+
+  
+---
+
+
+## `%stack_pop()` macro <a name="stackpop-macro-9"></a> ######
+
+Macro: stack_pop
+Purpose:
+  Pop (remove) and return the top element from a hash-based stack.
+  This macro retrieves the most recently pushed element (LIFO order)
+  and deletes it from the stack.
+
+Parameters:
+  outvar=
+    Output variable to store the popped value.
+  id=1
+    Unique numeric identifier for the stack (default: 1).
+
+Usage Example:
+  data a;
+    %stack_init(id=1,length=$1);
+    x="A"; %stack_push(invar=x,id=1); output;
+    x="B"; %stack_push(invar=x,id=1); output;
+    x="C"; %stack_push(invar=x,id=1); output;
+    x="";  %stack_pop(outvar=y,id=1);  output;
+    x="";  %stack_pop(outvar=y,id=1);  output;
+    x="";  %stack_peek(outvar=y,id=1); output;
+    x="";  %stack_pop(outvar=y,id=1);  output;
+  run;
+
+  
+---
+
+## `%stack_peek()` macro <a name="stackpeek-macro-8"></a> ######
+
+Macro: stack_peek
+Purpose:
+  Peek (inspect) the top element of a hash-based stack without removing it.
+
+Parameters:
+  outvar=
+    Output variable to store the peeked value.
+  id=1
+    Unique numeric identifier for the stack (default: 1).
+
+Usage Example:
+  data a;
+    %stack_init(id=1,length=$1);
+    x="A"; %stack_push(invar=x,id=1); output;
+    x="B"; %stack_push(invar=x,id=1); output;
+    x="C"; %stack_push(invar=x,id=1); output;
+    x="";  %stack_pop(outvar=y,id=1);  output;
+    x="";  %stack_peek(outvar=y,id=1); output;
+  run;
+
+  
+---
+
+
 ## `%queue_init()` macro <a name="queueinit-macro-5"></a> ######
 Purpose:
   Initialize a hash-based queue object in SAS for FIFO (First-In, First-Out)
@@ -157,6 +289,113 @@ run;
 
   
 ---
+
+## `%enqueue()` macro <a name="enqueue-macro-4"></a> ######
+
+Macro: enqueue
+Purpose:
+  Add a new element to the end of a hash-based queue structure.
+  This macro appends data to the queue initialized by %queue_init.
+
+Parameters:
+  invar=
+    Input variable containing the data value to be enqueued.
+  id=1
+    Unique numeric identifier for the queue (default: 1).
+
+Usage Example:
+data a;
+  %queue_init(id=1,length=$1);
+  x="A"; %enqueue(invar=x,id=1); output;
+  x="B"; %enqueue(invar=x,id=1); output;
+  x="C"; %enqueue(invar=x,id=1); output;
+  x=""; %dequeue(outvar=y,id=1); output;
+  x=""; %dequeue(outvar=y,id=1); output;
+  x=""; %queue_peek(outvar=y,id=1); output;
+  x=""; %dequeue(outvar=y,id=1); output;
+run;
+
+
+data c;
+set sashelp.class;
+  %queue_init(id=1,length=8);
+  if AGE <=14 then do;
+    %enqueue(invar=age,id=1)
+  end;
+  else do;
+    %dequeue(outvar=y,id=1)
+  end;
+run;
+  
+---
+
+## `%dequeue()` macro <a name="dequeue-macro-3"></a> ######
+
+Macro: dequeue
+Purpose:
+  Remove and return the first element (FIFO order) from a hash-based queue.
+  This macro retrieves the oldest data entry and deletes it from the queue.
+
+Parameters:
+  outvar=
+    Output variable to store the dequeued value.
+  id=1
+    Unique numeric identifier for the queue (default: 1).
+
+Usage Example:
+data b;
+  %queue_init(id=1,length=8);
+  x=1; %enqueue(invar=x,id=1); output;
+  x=2; %enqueue(invar=x,id=1); output;
+  x=3; %enqueue(invar=x,id=1); output;
+  x=.; %dequeue(outvar=y,id=1); output;
+  x=.; %dequeue(outvar=y,id=1); output;
+  x=.; %queue_peek(outvar=y,id=1); output;
+  x=.; %dequeue(outvar=y,id=1); output;
+run;
+
+
+data c;
+set sashelp.class;
+  %queue_init(id=1,length=8);
+  if AGE <=14 then do;
+    %enqueue(invar=age,id=1)
+  end;
+  else do;
+    %dequeue(outvar=y,id=1)
+  end;
+run;
+
+  
+---
+
+## `%queue_peek()` macro <a name="queuepeek-macro-6"></a> ######
+
+Macro: queue_peek
+Purpose:
+  Retrieve (peek) the next element to be dequeued from the queue
+  without actually removing it.
+
+Parameters:
+  outvar=
+    Output variable to store the peeked value.
+  id=1
+    Unique numeric identifier for the queue (default: 1).
+
+Usage Example:
+data a;
+  %queue_init(id=1,length=$1);
+  x="A"; %enqueue(invar=x,id=1); output;
+  x="B"; %enqueue(invar=x,id=1); output;
+  x="C"; %enqueue(invar=x,id=1); output;
+  x=""; %dequeue(outvar=y,id=1); output;
+  x=""; %dequeue(outvar=y,id=1); output;
+  x=""; %queue_peek(outvar=y,id=1); output;
+  x=""; %dequeue(outvar=y,id=1); output;
+run;
+
+  
+
 
 # version history
 0.1.0(28July2025):  Add  
