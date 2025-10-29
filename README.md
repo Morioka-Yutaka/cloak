@@ -156,7 +156,10 @@ Usage Example:
     drop stack1_no stack1_data;
   run;
 ~~~
-  
+
+<img width="158" height="210" alt="Image" src="https://github.com/user-attachments/assets/dcb49fdd-6798-4da1-a056-f68f85f2aafd" />
+
+
 ---
 
 ## `%stack_push()` macro <a name="stackpush-macro-10"></a> ######
