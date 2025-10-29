@@ -1,5 +1,6 @@
 # cloak
-A simple FCMP-based check-in/check-out storage system using dictionary objects in SAS. Store and retrieve data by key, like a digital cloakroom.  
+A simple FCMP-based check-in/check-out storage system using dictionary objects in SAS-store and retrieve data by key, like a digital cloakroom.  
+Additionally, macro-based stack and queue functions are provided.
 
 <img width="300" height="300" alt="Image" src="https://github.com/user-attachments/assets/2bd230ca-a72c-4b7e-b2bb-f2212a089566" /> 
 
