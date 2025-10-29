@@ -119,6 +119,15 @@ Notes:
   - It logs success or failure messages via the PUT statement.
 
 # version history
+0.1.0(28July2025):  Add
+  %queue_init() macro
+  ,%enqueue() macro
+  ,%dequeue() macro
+  ,%queue_peek() macro
+  ,%stack_init() macro
+  ,%stack_push() macro
+  ,%stack_pop() macro
+  ,%stack_peek() macro
 0.1.0(28July2025): Initial version
 
 ## What is SAS Packages?
