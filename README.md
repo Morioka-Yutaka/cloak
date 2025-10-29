@@ -287,7 +287,11 @@ Usage Example:
     x=""; %queue_peek(outvar=y,id=1); output;
     x=""; %dequeue(outvar=y,id=1); output;
   run;
+~~~
+<img width="150" height="200" alt="image" src="https://github.com/user-attachments/assets/b5f22f6c-7ecf-4441-8e84-e83d793d4bd8" />
 
+
+~~~sas
 data d;
   %queue_init(id=1,length=8,import_ds=sashelp.class,import_ds_data_var=age);
   x=1; %enqueue(invar=x,id=1); output;
@@ -298,7 +302,8 @@ data d;
   drop queue1_no queue1_data;
 run;
 ~~~
-  
+<img width="236" height="150" alt="image" src="https://github.com/user-attachments/assets/f916316d-dcb5-4d2b-9320-3be12fd7cb26" />
+
 ---
 
 ## `%enqueue()` macro <a name="enqueue-macro-4"></a> ######
