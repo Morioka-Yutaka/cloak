@@ -147,7 +147,10 @@ Usage Example:
     x="";  %stack_peek(outvar=y,id=1); output;
     x="";  %stack_pop(outvar=y,id=1);  output;
   run;
+~~~
+<img width="158" height="210" alt="Image" src="https://github.com/user-attachments/assets/dcb49fdd-6798-4da1-a056-f68f85f2aafd" />
 
+~~~sas
   data d;
     %stack_init(id=1,length=8,import_ds=sashelp.class,import_ds_data_var=age);
     x=1; %stack_push(invar=x,id=1); output;
@@ -156,8 +159,7 @@ Usage Example:
     drop stack1_no stack1_data;
   run;
 ~~~
-
-<img width="158" height="210" alt="Image" src="https://github.com/user-attachments/assets/dcb49fdd-6798-4da1-a056-f68f85f2aafd" />
+<img width="230" height="104" alt="Image" src="https://github.com/user-attachments/assets/51ccf091-7574-4f64-b7d2-50b74ca2eef7" />
 
 
 ---
