@@ -342,7 +342,7 @@ Purpose:
   This macro retrieves the oldest data entry and deletes it from the queue.  
   
 Parameters:  
-~~text
+~~~text
   outvar=
     Output variable to store the dequeued value.
   id=1
