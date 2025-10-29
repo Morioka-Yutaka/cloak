@@ -119,13 +119,12 @@ Notes:
   - It logs success or failure messages via the PUT statement.
 
 ## `%stack_init()` macro <a name="stackinit-macro-7"></a> ######
+Purpose:  
+  Initialize a hash-based stack object in SAS for LIFO (Last-In, First-Out)  
+  data storage and retrieval. Each stack is identified by a unique ID.  
 
-Macro: stack_init
-Purpose:
-  Initialize a hash-based stack object in SAS for LIFO (Last-In, First-Out)
-  data storage and retrieval. Each stack is identified by a unique ID.
-
-Parameters:
+Parameters:  
+~~~text
   id=1
     Unique numeric identifier for the stack (default: 1).
   length=$200
@@ -134,8 +133,10 @@ Parameters:
     (Optional) Name of an external dataset to import initial stack contents.
   import_ds_data_var=
     (Optional) Variable name in the imported dataset containing data values.
+~~~
 
-Usage Example:
+Usage Example:  
+~~~sas
   data a;
     %stack_init(id=1,length=$1);
     x="A"; %stack_push(invar=x,id=1); output;
@@ -154,24 +155,25 @@ Usage Example:
     x=.; %stack_pop(outvar=y,id=1); output;
     drop stack1_no stack1_data;
   run;
-
+~~~sas
   
 ---
 
 ## `%stack_push()` macro <a name="stackpush-macro-10"></a> ######
-
-Macro: stack_push
-Purpose:
-  Push (add) a new element onto the top of the hash-based stack.
-  This macro appends data to the stack initialized by %stack_init.
-
+Purpose:  
+  Push (add) a new element onto the top of the hash-based stack.  
+  This macro appends data to the stack initialized by %stack_init.  
+  
 Parameters:
+~~~text
   invar=
     Input variable containing the data value to be pushed.
   id=1
     Unique numeric identifier for the stack (default: 1).
+~~~
 
-Usage Example:
+Usage Example:  
+~~~sas
   data b;
     %stack_init(id=1,length=8);
     x=1; %stack_push(invar=x,id=1); output;
@@ -190,25 +192,26 @@ Usage Example:
       %stack_pop(outvar=y,id=1);
     end;
   run;
-
+~~~
   
 ---
 
 
 ## `%stack_pop()` macro <a name="stackpop-macro-9"></a> ######
-
-Macro: stack_pop
-Purpose:
-  Pop (remove) and return the top element from a hash-based stack.
-  This macro retrieves the most recently pushed element (LIFO order)
-  and deletes it from the stack.
-
-Parameters:
+Purpose:  
+  Pop (remove) and return the top element from a hash-based stack.  
+  This macro retrieves the most recently pushed element (LIFO order)  
+  and deletes it from the stack.  
+  
+Parameters:  
+~~~text
   outvar=
     Output variable to store the popped value.
   id=1
     Unique numeric identifier for the stack (default: 1).
+~~~
 
+~~~sas
 Usage Example:
   data a;
     %stack_init(id=1,length=$1);
@@ -220,23 +223,23 @@ Usage Example:
     x="";  %stack_peek(outvar=y,id=1); output;
     x="";  %stack_pop(outvar=y,id=1);  output;
   run;
-
+~~~
   
 ---
 
 ## `%stack_peek()` macro <a name="stackpeek-macro-8"></a> ######
-
-Macro: stack_peek
-Purpose:
-  Peek (inspect) the top element of a hash-based stack without removing it.
-
-Parameters:
+Purpose:  
+  Peek (inspect) the top element of a hash-based stack without removing it.  
+  
+Parameters:  
+~~~text
   outvar=
     Output variable to store the peeked value.
   id=1
     Unique numeric identifier for the stack (default: 1).
-
-Usage Example:
+~~~
+Usage Example:  
+~~~sas
   data a;
     %stack_init(id=1,length=$1);
     x="A"; %stack_push(invar=x,id=1); output;
@@ -245,17 +248,18 @@ Usage Example:
     x="";  %stack_pop(outvar=y,id=1);  output;
     x="";  %stack_peek(outvar=y,id=1); output;
   run;
-
+~~~
   
 ---
 
 
 ## `%queue_init()` macro <a name="queueinit-macro-5"></a> ######
-Purpose:
-  Initialize a hash-based queue object in SAS for FIFO (First-In, First-Out)
-  data storage and retrieval. Each queue is identified by a unique ID.
-
-Parameters:
+Purpose:  
+  Initialize a hash-based queue object in SAS for FIFO (First-In, First-Out)  
+  data storage and retrieval. Each queue is identified by a unique ID.  
+  
+Parameters:  
+~~~text
   id=1
     Unique numeric identifier for the queue (default: 1).
   length=$200
@@ -264,8 +268,10 @@ Parameters:
     (Optional) Name of an external dataset to import initial queue contents.
   import_ds_data_var=
     (Optional) Variable name in the imported dataset containing data values.
+~~~
 
-Usage Example:
+Usage Example:  
+~~~sas
   data a;
     %queue_init(id=1,length=$1);
     x="A"; %enqueue(invar=x,id=1); output;
@@ -286,24 +292,25 @@ data d;
   x=.;  %dequeue(outvar=y,id=1);  output;
   drop queue1_no queue1_data;
 run;
-
+~~~
   
 ---
 
 ## `%enqueue()` macro <a name="enqueue-macro-4"></a> ######
-
-Macro: enqueue
-Purpose:
-  Add a new element to the end of a hash-based queue structure.
-  This macro appends data to the queue initialized by %queue_init.
-
-Parameters:
+Purpose:  
+  Add a new element to the end of a hash-based queue structure.  
+  This macro appends data to the queue initialized by %queue_init.  
+  
+Parameters:  
+~~~text
   invar=
     Input variable containing the data value to be enqueued.
   id=1
     Unique numeric identifier for the queue (default: 1).
+~~~
 
-Usage Example:
+Usage Example:  
+~~~sas
 data a;
   %queue_init(id=1,length=$1);
   x="A"; %enqueue(invar=x,id=1); output;
@@ -315,7 +322,6 @@ data a;
   x=""; %dequeue(outvar=y,id=1); output;
 run;
 
-
 data c;
 set sashelp.class;
   %queue_init(id=1,length=8);
@@ -326,23 +332,25 @@ set sashelp.class;
     %dequeue(outvar=y,id=1)
   end;
 run;
-  
+~~~
+
 ---
 
 ## `%dequeue()` macro <a name="dequeue-macro-3"></a> ######
-
-Macro: dequeue
-Purpose:
-  Remove and return the first element (FIFO order) from a hash-based queue.
-  This macro retrieves the oldest data entry and deletes it from the queue.
-
-Parameters:
+Purpose:  
+  Remove and return the first element (FIFO order) from a hash-based queue.  
+  This macro retrieves the oldest data entry and deletes it from the queue.  
+  
+Parameters:  
+~~text
   outvar=
     Output variable to store the dequeued value.
   id=1
     Unique numeric identifier for the queue (default: 1).
+~~~
 
 Usage Example:
+~~~sas
 data b;
   %queue_init(id=1,length=8);
   x=1; %enqueue(invar=x,id=1); output;
@@ -365,24 +373,25 @@ set sashelp.class;
     %dequeue(outvar=y,id=1)
   end;
 run;
-
+~~~
   
 ---
 
 ## `%queue_peek()` macro <a name="queuepeek-macro-6"></a> ######
-
-Macro: queue_peek
-Purpose:
-  Retrieve (peek) the next element to be dequeued from the queue
-  without actually removing it.
-
-Parameters:
+Purpose:  
+  Retrieve (peek) the next element to be dequeued from the queue  
+  without actually removing it.  
+  
+Parameters:  
+~~~text
   outvar=
     Output variable to store the peeked value.
   id=1
     Unique numeric identifier for the queue (default: 1).
+~~~
 
-Usage Example:
+Usage Example:  
+~~~sas
 data a;
   %queue_init(id=1,length=$1);
   x="A"; %enqueue(invar=x,id=1); output;
@@ -393,7 +402,7 @@ data a;
   x=""; %queue_peek(outvar=y,id=1); output;
   x=""; %dequeue(outvar=y,id=1); output;
 run;
-
+~~~
   
 
 
